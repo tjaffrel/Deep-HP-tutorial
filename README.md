@@ -79,8 +79,7 @@ Additional configuration options, enable by default on Deep-HP branch:
 Before building Tinker-HP check if your CUDA version is matching `cuda_ver` (install.sh) or `cuda_version` (Makefile) and same for GPU [compute capability](https://en.wikipedia.org/wiki/CUDA) `c_c` (install.sh) or `compute_capability` (Makefile).
 
 If you chose to use the easy build way, run:
-
-	```bash
+```bash
 $> pwd
 #> /home/user/.../tinker-hp/GPU
 $> ci/install.sh
