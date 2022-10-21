@@ -137,7 +137,7 @@ For DeePMD it is similar but we don't provide other formats than the original `p
 We provide 6 examples that encompass the basics of Deep-HP inputs witch which you can do almost everything you want. They are located in `/home/user/.../tinker-hp/GPU/examples/`. Some toy MLP models are located in `/home/user/.../tinker-hp/GPU/ml_models/`.
 
 * **Example 1:**
-*Objective:* Perform machine learning potential simulation - on full system.
+*Objective:* Perform machine learning potential simulation - on full system. <br />
 Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and ANI2X potential.
 Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example1 1000 0.2 100 4 300 1`
 
