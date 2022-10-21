@@ -4,7 +4,7 @@ Deep-HP is a multi-GPU Machine Learning Potential platform which is part of the 
 
 ## What is Deep-HP?
 
-Deep-High Performance aims to democratize the use of Machine Learning in biological simulations. Especially, Deep-HP is here to scale up Machine Learning Potential code from laptop to hexascale and from quantum chemistry to biophysics.  
+Deep-HP aims to democratize the use of Machine Learning in biological simulations. Especially, Deep-HP is here to scale up Machine Learning Potential code from laptop to hexascale and from quantum chemistry to biophysics.  
 
 What can I do? Here's a few examples:
 
