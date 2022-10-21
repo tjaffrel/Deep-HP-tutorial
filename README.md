@@ -1,13 +1,13 @@
 # Deep-HP: Multi-GPUs platform for hybrid Machine Learning Polarizable Potential
 
-Deep-HP is a multi-GPU Machine Learning Potential platform which is part of the Tinker-HP package and aims to couple Machine Learning with force fields for biological simulations. 
+Deep-HP is a multi-GPU deep learning potential platform, part of the Tinker-HP molecular dynamics package and aims to couple deep learning with force fields for biological simulations. 
 
-## What is Deep-HP?
+# What is Deep-HP?
 
-Deep-HP aims to democratize the use of Machine Learning in biological simulations. Especially, Deep-HP is here to scale up Machine Learning Potential code from laptop to hexascale and from quantum chemistry to biophysics.  
+Deep-HP aims to democratize the use of deep learning in biological simulations. Especially, Deep-HP is here to scale up machine learning potential code from laptop to hexascale and from quantum chemistry to biophysics. Deep-HP ultimate goal is the unification within a
+reactive molecular dynamics many-body interaction potential of the short-range quantum mechanical accuracy and of long-range classical effects, at force field computational cost. Application of Deep-HP span from drug-like molecule to proteins and DNA.
 
 What can I do? Here's a few examples:
-
 * Combine trained machine learning potential with force fields (long-range interactions and many-body polarization effects).
 * Predict solvation free energies of drug-like molecules.
 * Predict binding free energies.
@@ -16,13 +16,15 @@ What can I do? Here's a few examples:
 * Everything than before but with fast machine learning models
 * For more check-out [TinkerTools](https://tinkertools.org/), [Tinker-HP](https://tinker-hp.org/)
 
-Currently, the platform can't be use to train a model and is compatible with TorchANI-type and DeePMD models but we will broaden it capabilities in a close future. <br />
+# Key features
 
-For more exotic models have a look into the source code (python libraries) or [contact us](https://piquemalresearch.com/)!
+* **Compatible with TensorFlow, Pytorch and Keyras**, among the most popular and efficient machine learning libraries that encompass almost all possible deep learning architectures.  
+* **Performing highly efficient classical as well as quantum (path-integral, quantum thermal bath, ...) molecular dynamics with your deep learning model** thanks to the highly optimized GPU-resident Tinker-HP code. Tinker-HP and Tinker9 are the fastest code for many-body polarizable force fields.
+* **Combine molecular dynamics with state-of-the-art enhanced sampling techniques** through the recent coupling with PLUMED and Colvars.
 
-## Installation 
+# Installation 
 
-### Python Environment 
+## Python Environment 
 
 We provide a python environment through the `tinkerml.yaml` file in the main folder `/home/user/.../tinker-hp/GPU`. Inside you can find all the required libraries. If you don't have Anaconda or Miniconda you should download it. This environment must be activate before running or compiling Tinker-HP's Deep-HP branch. <br />
 If you want to install Anaconda or Miniconda, have a look here [Anaconda](https://www.anaconda.com/products/distribution)<br />
@@ -34,11 +36,11 @@ Composition of the environment:
 * Deepmd-kit and libdeepmd are used for [DeePMD](https://docs.deepmodeling.com/projects/deepmd/en/master/index.html) models.
 * Our [TorchANI](https://aiqm.github.io/torchani/)-based library composed of lot of new features, more coming soon!
 
-### Prerequisites
+## Prerequisites
 
 The prerequisites for building Tinker-HP can be found [here](https://github.com/TinkerTools/tinker-hp/blob/Deep-HP/GPU/Prerequisites.md)
 
-### Bash Environment 
+## Bash Environment 
 
 Example of two bash environments with and without module, that should be load before running or compiling Tinker-HP's Deep-HP branch, the only modifications to make are `/home/user/.../` and `path_to_gnu`:
 
@@ -68,15 +70,15 @@ export PATH=$NVCOMPILERS/$NVARCH/21.5/comm_libs/mpi/bin:$NVCOMPILERS/$NVARCH/21.
 export LD_LIBRARY_PATH=$NVCOMPILERS/$NVARCH/21.5/comm_libs/mpi/lib:$NVCOMPILERS/$NVARCH/21.5/comm_libs/nccl/lib:$NVCOMPILERS/$NVARCH/21.5/comm_libs/nvshmen/lib:$NVCOMPILERS/$NVARCH/21.5/math_libs/lib64:$NVCOMPILERS/$NVARCH/21.5/compilers/lib:$NVCOMPILERS/$NVARCH/21.5/cuda/lib64:/home/user/.../tinker-hp/GPU/lib:$LD_LIBRARY_PATH
 ```
 
-### Build 
+## Build 
 
 After clone Tinker-HP's Deep-HP branch github depository `git clone -b Deep-HP https://github.com/TinkerTools/tinker-hp.git`, set your environment as explain before and proceed to installation as explain [Build Tinker-HP (GPU)](https://github.com/TinkerTools/tinker-hp/blob/Deep-HP/GPU/build.md). <br />
 Additional building configuration options of Deep-HP: 
 
-#### Easy Build with install.sh
+### Easy Build with install.sh
 * `build_ml` enable Deep-HP if set to 1. (Default value to 1 for Deep-HP)
 
-#### Using Makefile
+### Using Makefile
 * `NN_SUPPORT` enable Deep-HP if set to 1. (Default value to 1 for Deep-HP)
 
 Before building Tinker-HP check if your CUDA version is matching `cuda_ver` (install.sh) or `cuda_version` (Makefile) and same for GPU [compute capability](https://en.wikipedia.org/wiki/CUDA) `c_c` (install.sh) or `compute_capability` (Makefile). <br />
@@ -91,7 +93,7 @@ $> ci/install.sh
 
 :warning: Deep-HP is, for now, only available with Double and Mixed precision codes, so no fixed precision, `FPA_SUPPORT` is set by default to 0 on the Deep-HP branch.
 
-## Run Deep-HP
+# Run Deep-HP
 
 Deep-HP has only two main **KEYWORDS**: `MLPOT` and `ML-MODEL`. 
 
@@ -109,7 +111,7 @@ The begining of the **KEYWORDS** depend of whether the model was build with Torc
 * `ML-MODEL ANI_GENERIC my_mlp_model.pt # my_mlp_model.json my_mlp_model.pkl my_mlp_model.yaml`
 * `ML-MODEL DEEPMD my_mlp_model.pb` (Example 3)
 
-### TorchANI format
+## TorchANI format
 
 If your `model` was trained with TorchANI, you don't have to do anything in particular but make sure that :warning: **your predicted energies is in Hartree and atomic coordinates is in Angstrom** :warning: (default units in TorchANI). Tinker-HP will directly convert to kcal/mol. <br /> 
 For more information have a look in [TorchANI](https://aiqm.github.io/torchani/examples/energy_force.html) or directly in our source code extension located in your tinkerml environment `/home/user/.../anaconda3/envs/tinkerml/lib/python3.9/site-packages/torchani`. <br />
@@ -127,7 +129,7 @@ model.to_pickle("my_mlp_model.pkl")
 model.to_yaml("my_mlp_model.yaml")
 ```
 
-### DeePMD
+## DeePMD
 
 For DeePMD it is similar but we don't provide other formats than the original `pb`. :warning: **In DeePMD your predicted energies is in eV and atomic coordinates is in Angstrom** (default units in DeePMD).
 
