@@ -146,35 +146,35 @@ For DeePMD it is similar but we don't provide other formats than the original `p
 We provide 6 examples that encompass the basics of Deep-HP inputs witch which you can do almost everything you want. They are located in `/home/user/.../tinker-hp/GPU/examples/`. Some toy machine learning potential models are located in `/home/user/.../tinker-hp/GPU/ml_models/`.
 
 * **Example 1:** <br />
-:green_circle: *Objective:* Perform machine learning potential simulation - on the full system. <br />
+:green_circle: *Objective*: Perform machine learning potential simulation - on the full system. <br />
 Simulation parameter: NPT with montecarlo barostat, velocity-verlet integrator and ANI2X potential. <br />
-<ins>Command</ins>: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example1 1000 0.2 100 4 300 1` <br />
+<ins>Command</ins>: :arrow_right: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example1 1000 0.2 100 4 300 1` <br />
 
 * **Example 2:** <br />
-*Objective:* Perform hybrid machine learning potential/MM simulation - on the full system.<br />
+:green_circle: *Objective*: Perform hybrid machine learning potential/MM simulation - on the full system.<br />
 Simulation parameter: NPT with montecarlo barostat, velocity-verlet integrator and hybrid ANI2X/AMOEBA VdW energy.<br />
-<ins>Command</ins>: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example2 1000 0.2 100 4 300 1`<br />
+<ins>Command</ins>: :arrow_right: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example2 1000 0.2 100 4 300 1`<br />
 
 * **Example 3:**<br />
-*Objective:* Perform DeePMD machine learning potential simulation - on the full system.<br />
+:green_circle: *Objective*: Perform DeePMD machine learning potential simulation - on the full system.<br />
 Simulation parameter: NPT with montecarlo barostat, velocity-verlet integrator and a toy trained DeePMD potential. <br />
-<ins>Command</ins>: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example3 1000 0.2 100 4 300 1`<br />
+<ins>Command</ins>: :arrow_right: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example3 1000 0.2 100 4 300 1`<br />
 
 * **Example 4:**<br />
-*Objective:* Perform hybrid machine learning potential/MM simulation - on a ligand of the SAMPL4 challenge.<br />
+:green_circle: *Objective*: Perform hybrid machine learning potential/MM simulation - on a ligand of the SAMPL4 challenge.<br />
 Simulation parameter: NPT with montecarlo barostat, RESPA integrator with 0.2fs inner time-step/ 2fs outer time-step and ANI2X potential applied only to ligand-ligand interactions (atoms 1 to 24), ligand-water and water-water interactions use AMOEBA.<br />
 :yellow_circle: Note: You can try with the `integrator respa1` with the following setting `dshort 0.0002` (0.2fs), `dinter 0.001` (1fs) and use 3fs as outer time-step. It is safer for the dynamics stability to also enable `heavy-hydrogen`.
-<ins>Command</ins>: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example4 1000 2.0 100 4 300 1`<br />
+<ins>Command</ins>: :arrow_right: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example4 1000 2.0 100 4 300 1`<br />
 
 * **Example 5:**<br />
-*Objective:* Perform hybrid machine learning potential/MM simulation - on a host-guest complex of the SAMPL4 challenge.<br />
+:green_circle: *Objective*: Perform hybrid machine learning potential/MM simulation - on a host-guest complex of the SAMPL4 challenge.<br />
 Simulation parameter: NPT with montecarlo barostat, RESPA integrator with 0.2fs inner time-step/ 2fs outer time-step and ANI2X potential applied only to ligand-ligand interactions (atoms 1 to 24), the rest of the interactions use AMOEBA.<br />
-<ins>Command</ins>: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 2.0 100 4 300 1`<br />
+<ins>Command</ins>: :arrow_right: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 2.0 100 4 300 1`<br />
 
 * **Example 6:**<br />
-*Objective:* Perform machine learning potential simulation - on the full system (100000 atoms) with multi-GPUs.<br />
+:green_circle: *Objective:* Perform machine learning potential simulation - on the full system (100000 atoms) with multi-GPUs.<br />
 Simulation parameter: NPT with montecarlo barostat, velocity-verlet integrator and ANI2X potential.<br />
-<ins>Command</ins>: `mpirun -np 2 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 0.2 100 4 300 1`<br />
+<ins>Command</ins>: :arrow_right: `mpirun -np 2 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 0.2 100 4 300 1`<br />
 
 # Contact
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.<br />
