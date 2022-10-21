@@ -27,9 +27,9 @@ To create the environment with Anaconda or Miniconda, in your terminal: `conda e
 To activate or deactivate your environment: `conda activate tinkerml` or `conda deactivate`  
 
 Composition of the environment:
-* Pytorch, TensorFlow, Keras are the most used python machine libraries and are the building block of numerous machine learning potential libraries.
-* Deepmd-kit and libdeepmd are used for DeePMD models.
-* Our TorchANI-based library composed of lot of new features, more coming soon!
+* [Pytorch](https://pytorch.org/), [TensorFlow](https://www.tensorflow.org/), [Keras](https://keras.io/) are the most used python machine libraries and are the building block of numerous machine learning potential libraries.
+* Deepmd-kit and libdeepmd are used for [DeePMD](https://docs.deepmodeling.com/projects/deepmd/en/master/index.html) models.
+* Our [TorchANI](https://aiqm.github.io/torchani/)-based library composed of lot of new features, more coming soon!
 
 ### Prerequisites
 
@@ -98,116 +98,90 @@ Deep-HP has only two main **KEYWORDS**: `MLPOT` and `ML-MODEL`.
 
 `MLPOT` set the type of simulation:
 * `MLPOT NONE` deactivate the MLP evaluation
-* `MLPOT ONLY` activate only the MLP
-* `MLPOT` activate the MLP but also the FF 
-For the last keyword as the MLP and the FF is evaluate at each time step don't forget to disable the terms of the FF you don't want to use.
-
-Example of a key file for which a trained MLP `my_mlp_model.pt` is couple with AMOEBA Van Der Waals energy:
-
-```bash
-parameters    amoebabio09
-verbose
-integrator                    respa
-neighbor-list
-a-axis                        62.23
-vdw-cutoff                     12.0
-ewald
-ewald-cutoff                    7.0
-pme-grid                   64 64 64
-pme-order                         5
-randomseed                    12345
-polar-eps                   0.00001
-polar-alg                         1
-polar-prt                         2
-
-MLPOT 
-ML-MODEL my_mlp_model.pt
-bondterm                       none
-angleterm                      none
-strbndterm                     none
-ureyterm                       none
-opbendterm                     none
-torsionterm                    none
-pitorsterm                     none
-tortorterm                     none
-mpoleterm                      none
-polarizeterm                   none
-# The only term of the amoebabio09 potential that is not disable is vdwterm
-```
+* `MLPOT ONLY` activate only the MLP (Example 1)
+* `MLPOT` activate the MLP but also the FF. As both are evaluate at each time step don't forget to disable the terms of the FF you don't want to use (Example 2)
+* `MLPOT EMBEDDING` active the MLP on a group of atoms, like a QM/MM embedding. (Example 4)
 
 `ML-MODEL` set the machine learning model. For Tinker-HP native machine learning model, [ANI1X](https://pubs.rsc.org/en/content/articlehtml/2017/sc/c6sc05720a), [ANI1CCX](https://www.nature.com/articles/s41467-019-10827-4), [ANI2X](https://pubs.acs.org/doi/full/10.1021/acs.jctc.0c00121) and [ML_MBD](https://pubs.acs.org/doi/full/10.1021/acs.jpclett.2c00936), **KEYWORDS** are explicit:
-* `ML-MODEL ANI2X` use ANI2X as MLP
+* `ML-MODEL ANI2X` use ANI2X as MLP. Same for ANI1X, ANI1CXX and ML_MBD.
 
-For non native machine learning model, this is no more difficult, put your model  
-* `MLPOT ONLY` activate only the MLP
-* `MLPOT` activate the MLP but also the FF 
+For non native machine learning model, this is no more difficult. You should put your MLP model inside your simulation directory (with your .xyz and .key) and write explicity the name, including extension, of your model. 
+The begining of the **KEYWORDS** depend of whether the model was build with TorchANI or [DeePMD](https://docs.deepmodeling.com/projects/deepmd/en/master/index.html):
+* `ML-MODEL ANI_GENERIC my_mlp_model.pt # my_mlp_model.json my_mlp_model.pkl my_mlp_model.yaml`
+* `ML-MODEL DEEPMD my_mlp_model.pb`
 
+### TorchANI format
+
+If your `model` was trained with TorchANI, you don't have to do anything in particular but make sure that :warning: your predicted energies is in Hartree and atomic coordinates is in Angstrom (default units in TorchANI). Tinker-HP will directly convert to kcal/mol. 
+For more information have a look in [TorchANI](https://aiqm.github.io/torchani/examples/energy_force.html) or directly in our source code extension located in your tinkerml environment `/home/user/.../anaconda3/envs/tinkerml/lib/python3.9/site-packages/torchani`.
+Our TorchANI extension has also functions that convert your `model` in `pkl`, `yaml` and `json` formats. These formats are more compact and human readable friendly than TorchANI's `jit` format. But more importantly, when you are saving a `model` in `jit` format you are saving the whole code which may cause issues and you will not be able to use Tinker-HP's full capabilities (e.g neighbor list, multi-GPU, Particle Mesh Ewald).
+We recommend to save your model in `pkl`, `yaml` or `json` formats. Here is a python code that explain how to do it from this [Example](https://aiqm.github.io/torchani/examples/nnp_training.html) of TorchANI:
 
 ```python
-e, f, v, ae, av = model.eval(coordinates, cell, atomic_species, True)
-ev2kcalmol
-
-predictor = self.model((atomic_species, coordinates), cell=cell, pbc=self.pbc)
-predictor = self.model((atomic_species, coordinates), cell=cell, pbc=self.pbc, nblist=nblist, shift_energies=True)
-hartree2kcalmol
+# once you have your trained model:
+model = torchani.nn.Sequential(aev_computer, nn).to(device)
+# ...
+_, predicted_energies = model((species, coordinates))
+# you can save it with:
+model.to_json("my_mlp_model.json")
+model.to_pickle("my_mlp_model.pkl")
+model.to_yaml("my_mlp_model.yaml")
 ```
 
+### DeePMD
 
-```bash
-MLPOT ONLY # NONE EMBEDDING
-ANI2X ONLY # ANI2X ANI1X AN1CCX
-ANI2X NONE # ANI2X ANI1X AN1CCX
-ANI2X # ANI2X ANI1X AN1CCX
-```
+For DeePMD it is similar but we don't provide other formats than the original `pb`. :warning: In DeePMD your predicted energies is in eV and atomic coordinates is in Angstrom (default units in DeePMD).
 
-```bash
-ML-MODEL ANI2X # ANI1X AN1CCX ANI2X ML_MBD 
-ML-MODEL ANI_GENERIC my_ml_model.json # my_ml_model.pt my_ml_model.pkl
-ML-MODEL DEEPMD my_ml_model.pb
-```
-QM/MM ligand/protein in water systems. water FF, ligand/protein MLP
-```bash
-MLPOT EMBEDDING
-ML-MODEL ANI2X # ANI1X AN1CCX ANI2X ML_MBD my_ml_model.json my_ml_model.pt my_ml_model.pkl my_ml_model.pb
+## Example
 
-group 1 -1 100 # group 1 is the ML-MODEL
-ligand -1 100
-```
+We provide 6 examples that encompass the basics of Deep-HP inputs witch which you can do almost everything you want. They are located in `/home/user/.../tinker-hp/GPU/examples/`. Some toy MLP models are located in `/home/user/.../tinker-hp/GPU/ml_models/`.
 
-QM/MM Host-guest systems. Host and water FF, guest MLP
-```bash
-MLPOT EMBEDDING
-ML-MODEL ANI2X # my_ml_model.json my_ml_model.pt my_ml_model.pkl my_ml_model.pb
+* **Example 1:**
+*Objective:* Perform machine learning potential simulation - on full system.
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and ANI2X potential.
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example1 1000 0.2 100 4 300 1`
 
-group 1 -1 100 # group 1 ML-MODEL
-ligand -1 100
+* **Example 2:**
+*Objective:* Perform hybrid machine learning potential/MM simulation - on full system.
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and hybrid ANI2X/AMOEBA VdW energy.
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example2 1000 0.2 100 4 300 1`
 
-group 2 -101 1000 # group 2 FF (e.g AMOEBA, AMBER, CHARMM, ...)
-```
+* **Example 3:**
+*Objective:* Perform DeePMD machine learning potential simulation - on full system.
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and toy model DeePMD potential. 
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example3 1000 0.2 100 4 300 1`
+
+* **Example 4:**
+*Objective:* Perform hybrid machine learning potential/MM simulation - on a ligand of the SAMPL4 challenge.
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, RESPA integrator with 0.2fs inner time-step/ 2fs outer time-step and ANI2X potential applied only to ligand-ligand interactions (atoms 1 to 24), ligand-water and water-water interactions use AMOEBA.
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example4 1000 2.0 100 4 300 1`
+
+* **Example 5:**
+*Objective:* Perform hybrid machine learning potential/MM simulation - on a host-guest complex of the SAMPL4 challenge.
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, RESPA integrator with 0.2fs inner time-step/ 2fs outer time-step and ANI2X potential applied only to ligand-ligand interactions (atoms 1 to 24), the rest of the interactions use AMOEBA.
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 2.0 100 4 300 1`
+
+* **Example 6:**
+*Objective:* Perform machine learning potential simulation - on a full large system (100 000 atoms) with multi-GPUs.
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and ANI2X potential.
+Command GPU: `mpirun -np 2 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 0.2 100 4 300 1`
 
 ## Contact
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
+If you want to add your Mahchine Learning Potential code inside Deep-HP, [Contact us](https://piquemalresearch.com/)!
 
 ## Please Cite
 
 ```bash
 @misc{https://doi.org/10.48550/arxiv.2207.14276,
   doi = {10.48550/ARXIV.2207.14276},
-  
   url = {https://arxiv.org/abs/2207.14276},
-  
   author = {Inizan, Théo Jaffrelot and Plé, Thomas and Adjoua, Olivier and Ren, Pengyu and Gökcan, Hattice and Isayev, Olexandr and Lagardère, Louis and Piquemal, Jean-Philip},
-  
   keywords = {Chemical Physics (physics.chem-ph), FOS: Physical sciences, FOS: Physical sciences},
-  
   title = {Scalable Hybrid Deep Neural Networks/Polarizable Potentials Biomolecular Simulations including long-range effects},
-  
   publisher = {arXiv},
-  
   year = {2022},
-  
   copyright = {Creative Commons Attribution 4.0 International}
 }
 ```
