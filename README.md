@@ -164,7 +164,7 @@ Simulation parameter: NPT with montecarlo barostat, velocity-verlet integrator a
 *Objective:* Perform hybrid machine learning potential/MM simulation - on a ligand of the SAMPL4 challenge.<br />
 Simulation parameter: NPT with montecarlo barostat, RESPA integrator with 0.2fs inner time-step/ 2fs outer time-step and ANI2X potential applied only to ligand-ligand interactions (atoms 1 to 24), ligand-water and water-water interactions use AMOEBA.<br />
 ```html
-//<span style="color:orange;">Note:</span> You can try with the `integrator respa1` with the following setting `dshort 0.0002` (0.2fs), `dinter 0.001` (1fs) and use 3fs as outer time-step. It is safer for the dynamics stability to also enable `heavy-hydrogen`.
+//Note: You can try with the `integrator respa1` with the following setting `dshort 0.0002` (0.2fs), `dinter 0.001` (1fs) and use 3fs as outer time-step. It is safer for the dynamics stability to also enable `heavy-hydrogen`.
 ```
 <ins>Command</ins>: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example4 1000 2.0 100 4 300 1`<br />
 
