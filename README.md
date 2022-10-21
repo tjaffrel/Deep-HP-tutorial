@@ -8,26 +8,28 @@ Deep-High Performance aims to democratize the use of Machine Learning in biologi
 
 What can I do? Here's a few examples:
 
-* Combine trained machine learning potential with force fields components, such as long-range interactions and many-body polarization effects.
-* Predict solvation free energies of drug-like molecules
-* Predict ligand-binding free energies of host-guest systems
-* Conformational sampling with state-of-the-art enhanced sampling techniques (Colvars, Plumed)
+* Combine trained machine learning potential with force fields (long-range interactions and many-body polarization effects).
+* Predict solvation free energies of drug-like molecules.
+* Predict binding free energies.
+* Conformational sampling with state-of-the-art enhanced sampling techniques (Colvars, Plumed).
 * ...
 * For more check-out [TinkerTools](https://tinkertools.org/), [Tinker-HP](https://tinker-hp.org/)
 
-Currently, the platform can only be use on trained machine learning potential and will broaden it capabilities in a close future. It is currently only compatible with Pytorch and TensorFlow. TorchANI and DeePMD like models can fully access the capabilities of the Platform. For more exotic models have a look into the source code (python libraries) or contact us!
+Currently, the platform can't be use to train a model and is compatible with TorchANI-type and DeePMD models but we will broaden it capabilities in a close future. <br />
+
+For more exotic models have a look into the source code (python libraries) or [contact us](https://piquemalresearch.com/)!
 
 ## Installation 
 
 ### Python Environment 
 
-We provide a python environment through the `tinkerml.yaml` file in the main folder `/my_directory/tinker-hp/GPU`. Inside you can find all the required libraries. If you don't have Anaconda or Miniconda you should download and load them before running or compiling Tinker-HP's Deep-HP branch.
-If you want to install Anaconda or Miniconda, have a look here [Anaconda](https://www.anaconda.com/products/distribution)
-To create the environment with Anaconda or Miniconda, in your terminal: `conda env create -f tinkerml.yaml`
-To activate or deactivate your environment: `conda activate tinkerml` or `conda deactivate`  
+We provide a python environment through the `tinkerml.yaml` file in the main folder `/home/user/.../tinker-hp/GPU`. Inside you can find all the required libraries. If you don't have Anaconda or Miniconda you should download it. This environment must be activate before running or compiling Tinker-HP's Deep-HP branch. <br />
+If you want to install Anaconda or Miniconda, have a look here [Anaconda](https://www.anaconda.com/products/distribution)<br />
+To create the environment with Anaconda or Miniconda, run in your terminal: `conda env create -f tinkerml.yaml`<br />
+To activate or deactivate your environment: `conda activate tinkerml` or `conda deactivate`  <br />
 
 Composition of the environment:
-* [Pytorch](https://pytorch.org/), [TensorFlow](https://www.tensorflow.org/), [Keras](https://keras.io/) are the most used python machine libraries and are the building block of numerous machine learning potential libraries.
+* [Pytorch](https://pytorch.org/), [TensorFlow](https://www.tensorflow.org/), [Keras](https://keras.io/) are the building block of most of machine learning potential libraries.
 * Deepmd-kit and libdeepmd are used for [DeePMD](https://docs.deepmodeling.com/projects/deepmd/en/master/index.html) models.
 * Our [TorchANI](https://aiqm.github.io/torchani/)-based library composed of lot of new features, more coming soon!
 
@@ -37,7 +39,7 @@ The prerequisites for building Tinker-HP can be found [here](https://github.com/
 
 ### Bash Environment 
 
-Example of two bash environments with and without module, only modification to make are `/home/user/.../` and `path_to_gnu`:
+Example of two bash environments with and without module, that should be load before running or compiling Tinker-HP's Deep-HP branch, the only modifications to make are `/home/user/.../` and `path_to_gnu`:
 
 ```bash 
 #/bin/bash
@@ -67,16 +69,17 @@ export LD_LIBRARY_PATH=$NVCOMPILERS/$NVARCH/21.5/comm_libs/mpi/lib:$NVCOMPILERS/
 
 ### Build 
 
-After setting your environment according to the Prerequisites, clone Tinker-HP's Deep-HP branch github depository `git clone -b Deep-HP https://github.com/TinkerTools/tinker-hp.git` and proceed to installation as explain [Build Tinker-HP (GPU)](https://github.com/TinkerTools/tinker-hp/blob/Deep-HP/GPU/build.md)
-Additional configuration options, enable by default on Deep-HP branch: 
+After clone Tinker-HP's Deep-HP branch github depository `git clone -b Deep-HP https://github.com/TinkerTools/tinker-hp.git`, set your environment as explain before and proceed to installation as explain [Build Tinker-HP (GPU)](https://github.com/TinkerTools/tinker-hp/blob/Deep-HP/GPU/build.md). <br />
+Additional building configuration options of Deep-HP: 
 
 #### Easy Build with install.sh
-* `build_ml` enable Deep-HP if set to 1.
+* `build_ml` enable Deep-HP if set to 1. (Default value to 1 for Deep-HP)
 
 #### Using Makefile
-* `NN_SUPPORT` enable Deep-HP if set to 1.
+* `NN_SUPPORT` enable Deep-HP if set to 1. (Default value to 1 for Deep-HP)
 
-Before building Tinker-HP check if your CUDA version is matching `cuda_ver` (install.sh) or `cuda_version` (Makefile) and same for GPU [compute capability](https://en.wikipedia.org/wiki/CUDA) `c_c` (install.sh) or `compute_capability` (Makefile).
+Before building Tinker-HP check if your CUDA version is matching `cuda_ver` (install.sh) or `cuda_version` (Makefile) and same for GPU [compute capability](https://en.wikipedia.org/wiki/CUDA) `c_c` (install.sh) or `compute_capability` (Makefile). <br />
+Deep-HP use the cudatoolkit version 11.3 so your version should a, e.g, `cuda_ver >= 11.3`.
 
 If you chose to use the easy build way, run:
 ```bash
@@ -85,36 +88,31 @@ $> pwd
 $> ci/install.sh
 ```
 
-:warning: Deep-HP is, for now, only available with Double and Mixed precision codes, so no fixed precision, `FPA_SUPPORT` should be set to 0.
+:warning: Deep-HP is, for now, only available with Double and Mixed precision codes, so no fixed precision, `FPA_SUPPORT` is set by default to 0 on the Deep-HP branch.
 
 ## Run Deep-HP
-
-Tinker need 
-Existing Machine Learning Potential: ANI-2x, ANI-1x, ANI-1ccx
-Compatible integrators: Verlet, RESPA/BAOAB RESPA, RESPA1/BAOAB RESPA1
-To enable their use, in the key file:
 
 Deep-HP has only two main **KEYWORDS**: `MLPOT` and `ML-MODEL`. 
 
 `MLPOT` set the type of simulation:
-* `MLPOT NONE` deactivate the MLP evaluation
-* `MLPOT ONLY` activate only the MLP (Example 1)
-* `MLPOT` activate the MLP but also the FF. As both are evaluate at each time step don't forget to disable the terms of the FF you don't want to use (Example 2)
-* `MLPOT EMBEDDING` active the MLP on a group of atoms, like a QM/MM embedding. (Example 4)
+* `MLPOT NONE` deactivate the machine learning potential evaluation
+* `MLPOT ONLY` activate only the machine learning potential (Example 1, 3, 6)
+* `MLPOT` activate the machine learning potential but also the force field. As both are evaluate at each time step don't forget to disable the terms of the forcefield you don't want to use (Example 2)
+* `MLPOT EMBEDDING` active the machine learning potential on a group of atoms, like a QM/MM embedding. (Example 4, 5)
 
 `ML-MODEL` set the machine learning model. For Tinker-HP native machine learning model, [ANI1X](https://pubs.rsc.org/en/content/articlehtml/2017/sc/c6sc05720a), [ANI1CCX](https://www.nature.com/articles/s41467-019-10827-4), [ANI2X](https://pubs.acs.org/doi/full/10.1021/acs.jctc.0c00121) and [ML_MBD](https://pubs.acs.org/doi/full/10.1021/acs.jpclett.2c00936), **KEYWORDS** are explicit:
-* `ML-MODEL ANI2X` use ANI2X as MLP. Same for ANI1X, ANI1CXX and ML_MBD.
+* `ML-MODEL ANI2X` use ANI2X as machine learning potential. Same for ANI1X, ANI1CXX and ML_MBD. (Example 1, 2, 4, 5, 6)
 
-For non native machine learning model, this is no more difficult. You should put your MLP model inside your simulation directory (with your .xyz and .key) and write explicity the name, including extension, of your model. 
+For non native machine learning model, this is no more difficult. You should put your machine learning potential model inside your simulation directory (with your .xyz and .key) and write explicity the name, including extension, of your model. <br />
 The begining of the **KEYWORDS** depend of whether the model was build with TorchANI or [DeePMD](https://docs.deepmodeling.com/projects/deepmd/en/master/index.html):
 * `ML-MODEL ANI_GENERIC my_mlp_model.pt # my_mlp_model.json my_mlp_model.pkl my_mlp_model.yaml`
-* `ML-MODEL DEEPMD my_mlp_model.pb`
+* `ML-MODEL DEEPMD my_mlp_model.pb` (Example 3)
 
 ### TorchANI format
 
-If your `model` was trained with TorchANI, you don't have to do anything in particular but make sure that :warning: your predicted energies is in Hartree and atomic coordinates is in Angstrom (default units in TorchANI). Tinker-HP will directly convert to kcal/mol. 
-For more information have a look in [TorchANI](https://aiqm.github.io/torchani/examples/energy_force.html) or directly in our source code extension located in your tinkerml environment `/home/user/.../anaconda3/envs/tinkerml/lib/python3.9/site-packages/torchani`.
-Our TorchANI extension has also functions that convert your `model` in `pkl`, `yaml` and `json` formats. These formats are more compact and human readable friendly than TorchANI's `jit` format. But more importantly, when you are saving a `model` in `jit` format you are saving the whole code which may cause issues and you will not be able to use Tinker-HP's full capabilities (e.g neighbor list, multi-GPU, Particle Mesh Ewald).
+If your `model` was trained with TorchANI, you don't have to do anything in particular but make sure that :warning: **your predicted energies is in Hartree and atomic coordinates is in Angstrom** :warning: (default units in TorchANI). Tinker-HP will directly convert to kcal/mol. <br /> 
+For more information have a look in [TorchANI](https://aiqm.github.io/torchani/examples/energy_force.html) or directly in our source code extension located in your tinkerml environment `/home/user/.../anaconda3/envs/tinkerml/lib/python3.9/site-packages/torchani`. <br />
+Our TorchANI extension has also functions that convert your `model` in `pkl`, `yaml` and `json` formats. These formats are more compact and human readable friendly than TorchANI's `jit` format. But more importantly, when you are saving a `model` in `jit` format you are saving the whole code which may cause issues and you will not be able to use Tinker-HP's full capabilities (e.g neighbor list, multi-GPU, Particle Mesh Ewald). <br />
 We recommend to save your model in `pkl`, `yaml` or `json` formats. Here is a python code that explain how to do it from this [Example](https://aiqm.github.io/torchani/examples/nnp_training.html) of TorchANI:
 
 ```python
@@ -130,11 +128,11 @@ model.to_yaml("my_mlp_model.yaml")
 
 ### DeePMD
 
-For DeePMD it is similar but we don't provide other formats than the original `pb`. :warning: In DeePMD your predicted energies is in eV and atomic coordinates is in Angstrom (default units in DeePMD).
+For DeePMD it is similar but we don't provide other formats than the original `pb`. :warning: **In DeePMD your predicted energies is in eV and atomic coordinates is in Angstrom** (default units in DeePMD).
 
 # Example
 
-We provide 6 examples that encompass the basics of Deep-HP inputs witch which you can do almost everything you want. They are located in `/home/user/.../tinker-hp/GPU/examples/`. Some toy MLP models are located in `/home/user/.../tinker-hp/GPU/ml_models/`.
+We provide 6 examples that encompass the basics of Deep-HP inputs witch which you can do almost everything you want. They are located in `/home/user/.../tinker-hp/GPU/examples/`. Some toy machine learning potential models are located in `/home/user/.../tinker-hp/GPU/ml_models/`.
 
 * **Example 1:** <br />
 *Objective:* Perform machine learning potential simulation - on full system. <br />
@@ -169,7 +167,7 @@ Command GPU: `mpirun -np 2 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 0.2 100
 # Contact
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.<br />
 
-If you want to add your Mahchine Learning Potential code inside Deep-HP, [Contact us](https://piquemalresearch.com/)!
+If you want to add your favorite machine learning potential code inside Deep-HP, [Contact us](https://piquemalresearch.com/)!
 
 # Please Cite
 
@@ -177,7 +175,7 @@ If you want to add your Mahchine Learning Potential code inside Deep-HP, [Contac
 @misc{https://doi.org/10.48550/arxiv.2207.14276,
   doi = {10.48550/ARXIV.2207.14276},
   url = {https://arxiv.org/abs/2207.14276},
-  author = {Inizan, Théo Jaffrelot and Plé, Thomas and Adjoua, Olivier and Ren, Pengyu and Gökcan, Hattice and Isayev, Olexandr and Lagardère, Louis and Piquemal, Jean-Philip},
+  author = {Jaffrelot Inizan, Théo and Plé, Thomas and Adjoua, Olivier and Ren, Pengyu and Gökcan, Hattice and Isayev, Olexandr and Lagardère, Louis and Piquemal, Jean-Philip},
   keywords = {Chemical Physics (physics.chem-ph), FOS: Physical sciences, FOS: Physical sciences},
   title = {Scalable Hybrid Deep Neural Networks/Polarizable Potentials Biomolecular Simulations including long-range effects},
   publisher = {arXiv},
