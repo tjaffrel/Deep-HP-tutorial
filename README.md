@@ -132,46 +132,46 @@ model.to_yaml("my_mlp_model.yaml")
 
 For DeePMD it is similar but we don't provide other formats than the original `pb`. :warning: In DeePMD your predicted energies is in eV and atomic coordinates is in Angstrom (default units in DeePMD).
 
-## Example
+# Example
 
 We provide 6 examples that encompass the basics of Deep-HP inputs witch which you can do almost everything you want. They are located in `/home/user/.../tinker-hp/GPU/examples/`. Some toy MLP models are located in `/home/user/.../tinker-hp/GPU/ml_models/`.
 
-* **Example 1:**
+* **Example 1:** <br />
 *Objective:* Perform machine learning potential simulation - on full system. <br />
-Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and ANI2X potential.
-Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example1 1000 0.2 100 4 300 1`
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and ANI2X potential. <br />
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example1 1000 0.2 100 4 300 1` <br />
 
-* **Example 2:**
-*Objective:* Perform hybrid machine learning potential/MM simulation - on full system.
-Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and hybrid ANI2X/AMOEBA VdW energy.
-Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example2 1000 0.2 100 4 300 1`
+* **Example 2:** <br />
+*Objective:* Perform hybrid machine learning potential/MM simulation - on full system.<br />
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and hybrid ANI2X/AMOEBA VdW energy.<br />
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example2 1000 0.2 100 4 300 1`<br />
 
-* **Example 3:**
-*Objective:* Perform DeePMD machine learning potential simulation - on full system.
-Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and toy model DeePMD potential. 
-Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example3 1000 0.2 100 4 300 1`
+* **Example 3:**<br />
+*Objective:* Perform DeePMD machine learning potential simulation - on full system.<br />
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and toy model DeePMD potential. <br />
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example3 1000 0.2 100 4 300 1`<br />
 
-* **Example 4:**
-*Objective:* Perform hybrid machine learning potential/MM simulation - on a ligand of the SAMPL4 challenge.
-Simulation parameter: NPT with montecarlo barostat and bussi thermostat, RESPA integrator with 0.2fs inner time-step/ 2fs outer time-step and ANI2X potential applied only to ligand-ligand interactions (atoms 1 to 24), ligand-water and water-water interactions use AMOEBA.
-Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example4 1000 2.0 100 4 300 1`
+* **Example 4:**<br />
+*Objective:* Perform hybrid machine learning potential/MM simulation - on a ligand of the SAMPL4 challenge.<br />
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, RESPA integrator with 0.2fs inner time-step/ 2fs outer time-step and ANI2X potential applied only to ligand-ligand interactions (atoms 1 to 24), ligand-water and water-water interactions use AMOEBA.<br />
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example4 1000 2.0 100 4 300 1`<br />
 
-* **Example 5:**
-*Objective:* Perform hybrid machine learning potential/MM simulation - on a host-guest complex of the SAMPL4 challenge.
-Simulation parameter: NPT with montecarlo barostat and bussi thermostat, RESPA integrator with 0.2fs inner time-step/ 2fs outer time-step and ANI2X potential applied only to ligand-ligand interactions (atoms 1 to 24), the rest of the interactions use AMOEBA.
-Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 2.0 100 4 300 1`
+* **Example 5:**<br />
+*Objective:* Perform hybrid machine learning potential/MM simulation - on a host-guest complex of the SAMPL4 challenge.<br />
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, RESPA integrator with 0.2fs inner time-step/ 2fs outer time-step and ANI2X potential applied only to ligand-ligand interactions (atoms 1 to 24), the rest of the interactions use AMOEBA.<br />
+Command GPU: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 2.0 100 4 300 1`<br />
 
-* **Example 6:**
-*Objective:* Perform machine learning potential simulation - on a full large system (100 000 atoms) with multi-GPUs.
-Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and ANI2X potential.
-Command GPU: `mpirun -np 2 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 0.2 100 4 300 1`
+* **Example 6:**<br />
+*Objective:* Perform machine learning potential simulation - on a full large system (100 000 atoms) with multi-GPUs.<br />
+Simulation parameter: NPT with montecarlo barostat and bussi thermostat, velocity-verlet integrator and ANI2X potential.<br />
+Command GPU: `mpirun -np 2 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 0.2 100 4 300 1`<br />
 
-## Contact
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+# Contact
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.<br />
 
 If you want to add your Mahchine Learning Potential code inside Deep-HP, [Contact us](https://piquemalresearch.com/)!
 
-## Please Cite
+# Please Cite
 
 ```bash
 @misc{https://doi.org/10.48550/arxiv.2207.14276,
