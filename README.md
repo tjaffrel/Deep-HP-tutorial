@@ -115,13 +115,14 @@ The begining of the **KEYWORDS** depend of whether the model was build with Torc
 * `ML-MODEL ANI_GENERIC my_mlp_model.pt # my_mlp_model.json my_mlp_model.pkl my_mlp_model.yaml`
 * `ML-MODEL DEEPMD my_mlp_model.pb` (Example 3)
 
-: warning : Almost all Tinker features are compatible with Deep-HP such as RESPA and RESPA1 integrator **BUT** the splitting use is a bit different from AMOEBA and is **only available when using the embedding scheme** `MLPOT EMBEDDING`. To understand why, have a look in section 2.3.5 of [our paper](https://arxiv.org/pdf/2207.14276.pdf)
+:warning: Almost all Tinker features are compatible with Deep-HP such as RESPA and RESPA1 integrator **BUT** the splitting use is a bit different from AMOEBA and is **only available when using the embedding scheme** `MLPOT EMBEDDING`. To understand why, have a look in section 2.3.5 of [our paper](https://arxiv.org/pdf/2207.14276.pdf)
 
 ## TorchANI format
 
 If your `model` was trained with TorchANI, you don't have to do anything in particular but make sure that :warning: **your predicted energies is in Hartree and atomic coordinates is in Angstrom** :warning: (default units in TorchANI). Tinker-HP will convert it to kcal/mol. <br /> 
 For more information have a look in [TorchANI](https://aiqm.github.io/torchani/examples/energy_force.html) or directly in our source code extension located in your tinkerml environment `/home/user/.../anaconda3/envs/tinkerml/lib/python3.9/site-packages/torchani`. <br />
-Our TorchANI extension has also functions that convert your `model` in `pkl`, `yaml` and `json` formats. These formats are more compact and human readable friendly than TorchANI's `jit` format. But more importantly, when you are saving a `model` in `jit` format you are saving the whole code and you will not be able to use Tinker-HP's full capabilities for example its highly efficient neighbor list and thus use multi-GPU, Particle Mesh Ewald,... <br />
+Our TorchANI extension has also functions that convert your `model` in `pkl`, `yaml` and `json` formats. These formats are more compact and human readable friendly than TorchANI's `jit` format. <br />
+But more importantly, when you are saving a `model` in `jit` format you are saving the whole code and you will not be able to use Tinker-HP's full capabilities for example its highly efficient neighbor list and thus use multi-GPU, Particle Mesh Ewald,... <br />
 We recommend to save your model in `pkl`, `yaml` or `json` formats. Here is a python code that explain how to do it, starting from this [Example](https://aiqm.github.io/torchani/examples/nnp_training.html) of TorchANI:
 
 ```python
@@ -139,7 +140,8 @@ model.to_yaml("my_mlp_model.yaml")
 
 ## DeePMD
 
-For DeePMD it is similar but we don't provide other formats than the original `pb`. :warning: **In DeePMD your predicted energies is in eV and atomic coordinates is in Angstrom** (default units in DeePMD). Tinker-HP will convert it to kcal/mol.
+For DeePMD it is similar but we don't provide other formats than the original `pb`. <br />
+:warning: **In DeePMD your predicted energies is in eV and atomic coordinates is in Angstrom** (default units in DeePMD). Tinker-HP will convert it to kcal/mol.
 
 # Example
 
@@ -173,7 +175,7 @@ We provide 6 examples that encompass the basics of Deep-HP inputs witch which yo
 <ins>Command</ins>: :arrow_right: `mpirun -np 1 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 2.0 100 4 300 1`<br />
 
 * **Example 6:**<br />
-:green_circle: *Objective:* Perform machine learning potential simulation - on the full system (100000 atoms) with multi-GPUs.<br />
+:green_circle: *Objective:* Perform machine learning potential simulation - on the full system (100000 atoms) with 2 GPUs.<br />
 :large_blue_circle: Simulation parameter: NPT with montecarlo barostat, velocity-verlet integrator and ANI2X potential.<br />
 <ins>Command</ins>: :arrow_right: `mpirun -np 2 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 0.2 100 4 300 1`<br />
 
