@@ -13,6 +13,7 @@ What can I do? Here's a few examples:
 * Predict binding free energies.
 * Conformational sampling with state-of-the-art enhanced sampling techniques (Colvars, Plumed).
 * ...
+* Everything than before but with fast machine learning models
 * For more check-out [TinkerTools](https://tinkertools.org/), [Tinker-HP](https://tinker-hp.org/)
 
 Currently, the platform can't be use to train a model and is compatible with TorchANI-type and DeePMD models but we will broaden it capabilities in a close future. <br />
@@ -167,7 +168,8 @@ Command GPU: `mpirun -np 2 ../bin/dynamic_ml.mixed Deep-HP_example5 1000 0.2 100
 # Contact
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.<br />
 
-If you want to add your favorite machine learning potential code inside Deep-HP, [Contact us](https://piquemalresearch.com/)!
+If you want to add your favorite machine learning potential code inside Deep-HP, Contact us:
+* jean-philip.piquemal@sorbonne-universite.fr
 
 # Please Cite
 
