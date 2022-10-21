@@ -1,4 +1,4 @@
-[![Citation Badge](https://pubs.rsc.org/en/content/articlelanding/2018/sc/c7sc04531j)](https://juleskreuer.eu/projekte/citation-badge/) ![GitHub followers](https://img.shields.io/github/followers/TinkerTools?style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/TINKERtoolsMD?style=social) 
+[![Citation Badge](https://api.juleskreuer.eu/citation-badge.php?doi=DOI https://doi.org/10.1039/C7SC04531J)](https://juleskreuer.eu/projekte/citation-badge/) ![GitHub followers](https://img.shields.io/github/followers/TinkerTools?style=social) ![Twitter Follow](https://img.shields.io/twitter/follow/TINKERtoolsMD?style=social) 
 # Deep-HP: Multi-GPUs platform for hybrid Machine Learning Polarizable Potential
 
 Deep-HP is a multi-GPU deep learning potential platform, part of the Tinker-HP molecular dynamics package and aims to couple deep learning with force fields for biological simulations. 
