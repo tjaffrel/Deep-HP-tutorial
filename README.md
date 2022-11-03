@@ -95,7 +95,7 @@ $> pwd
 $> ci/install.sh
 ```
 
-Then, build the Machine Learning dynamical library:
+Then, build the Machine Learning Potential dynamic library in the source path:
 ```bash
 $> pwd
 #> /home/user/.../tinker-hp/GPU/source
