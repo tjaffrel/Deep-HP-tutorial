@@ -95,6 +95,13 @@ $> pwd
 $> ci/install.sh
 ```
 
+Then, build the Machine Learning dynamical library:
+```bash
+$> pwd
+#> /home/user/.../tinker-hp/GPU/source
+$> python mlbuilder.py | cp libmlinterface.dylib ../lib/
+```
+
 :warning: Deep-HP is, for now, only available with Double and Mixed precision codes, so no fixed precision, `FPA_SUPPORT` is set by default to 0 on the Deep-HP branch.
 
 # Run Deep-HP
