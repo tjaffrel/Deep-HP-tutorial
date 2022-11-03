@@ -99,7 +99,8 @@ Then, build the Machine Learning Potential dynamic library in the source path:
 ```bash
 $> pwd
 #> /home/user/.../tinker-hp/GPU/source
-$> python mlbuilder.py | cp libmlinterface.dylib ../lib/
+$> python mlbuilder.py 
+$> cp libmlinterface.dylib ../lib/
 ```
 
 :warning: Deep-HP is, for now, only available with Double and Mixed precision codes, so no fixed precision, `FPA_SUPPORT` is set by default to 0 on the Deep-HP branch.
